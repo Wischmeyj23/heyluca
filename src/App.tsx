@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
+import Home from "./pages/Home";
 import Capture from "./pages/Capture";
 import Notes from "./pages/Notes";
 import NoteDetail from "./pages/NoteDetail";
@@ -24,7 +25,7 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen bg-bg">
           <Routes>
-            <Route path="/" element={<Navigate to="/capture" replace />} />
+            <Route path="/" element={<Home />} />
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/capture" element={<><Capture /><Navigation /></>} />
             <Route path="/notes" element={<><Notes /><Navigation /></>} />
