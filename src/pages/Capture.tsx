@@ -118,7 +118,6 @@ export default function Capture() {
           <RecordButton
             onStart={handleStartRecording}
             onStop={handleStopRecording}
-            disabled={isRecording}
           />
         </div>
 
