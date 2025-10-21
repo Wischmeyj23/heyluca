@@ -14,7 +14,39 @@ export default {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          contrast: "hsl(var(--brand-contrast))",
+          hover: "hsl(var(--brand-hover))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          hover: "hsl(var(--accent-hover))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        bg: "hsl(var(--bg))",
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          elevated: "hsl(var(--surface-elevated))",
+        },
+        text: {
+          DEFAULT: "hsl(var(--text))",
+          muted: "hsl(var(--text-muted))",
+          subtle: "hsl(var(--text-subtle))",
+        },
+        status: {
+          draft: "hsl(var(--status-draft))",
+          processing: "hsl(var(--status-processing))",
+          ready: "hsl(var(--status-ready))",
+          error: "hsl(var(--status-error))",
+        },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        error: "hsl(var(--error))",
+        border: {
+          DEFAULT: "hsl(var(--border))",
+          subtle: "hsl(var(--border-subtle))",
+        },
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -35,10 +67,6 @@ export default {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -47,16 +75,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-        },
+      },
+      boxShadow: {
+        'sm': 'var(--shadow-sm)',
+        'md': 'var(--shadow-md)',
+        'lg': 'var(--shadow-lg)',
+        'brand': 'var(--shadow-brand)',
+      },
+      backgroundImage: {
+        'gradient-brand': 'var(--gradient-brand)',
+        'gradient-surface': 'var(--gradient-surface)',
+      },
+      transitionProperty: {
+        'base': 'var(--transition-base)',
+        'smooth': 'var(--transition-smooth)',
       },
       borderRadius: {
         lg: "var(--radius)",
