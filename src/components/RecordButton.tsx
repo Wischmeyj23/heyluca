@@ -25,7 +25,6 @@ export function RecordButton({
       intervalRef.current = setInterval(() => {
         setDuration(prev => {
           if (prev >= maxDuration) {
-            handleStop();
             return maxDuration;
           }
           return prev + 1;
@@ -42,6 +41,12 @@ export function RecordButton({
       }
     };
   }, [isRecording, maxDuration]);
+
+  useEffect(() => {
+    if (isRecording && duration >= maxDuration) {
+      handleStop();
+    }
+  }, [duration, isRecording, maxDuration]);
 
   const handleStart = () => {
     setDuration(0);
