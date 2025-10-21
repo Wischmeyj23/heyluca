@@ -74,7 +74,7 @@ export function RecordButton({
       <div className="relative">
         {/* Progress ring */}
         {isRecording && (
-          <svg className="absolute inset-0 -rotate-90" width="160" height="160">
+          <svg className="absolute inset-0 -rotate-90 pointer-events-none z-0" width="160" height="160" aria-hidden="true">
             <circle
               cx="80"
               cy="80"
@@ -104,7 +104,7 @@ export function RecordButton({
           disabled={disabled}
           onClick={isRecording ? handleStop : handleStart}
           className={cn(
-            "w-40 h-40 rounded-full transition-all duration-300",
+            "relative z-10 w-40 h-40 rounded-full transition-all duration-300",
             isRecording 
               ? "bg-error hover:bg-error/90 shadow-lg shadow-error/30" 
               : "bg-brand hover:bg-brand-hover shadow-brand"
