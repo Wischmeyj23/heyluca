@@ -91,7 +91,7 @@ export default function Auth() {
             <Card>
               <CardHeader>
                 <CardTitle>Welcome back</CardTitle>
-                <CardDescription>Sign in to your HeyLuca account</CardDescription>
+                <CardDescription>Sign in to your account</CardDescription>
               </CardHeader>
               <form onSubmit={handleSignIn}>
                 <CardContent className="space-y-4">
@@ -137,7 +137,7 @@ export default function Auth() {
             <Card>
               <CardHeader>
                 <CardTitle>Create an account</CardTitle>
-                <CardDescription>Get started with HeyLuca today</CardDescription>
+                <CardDescription>Get started today</CardDescription>
               </CardHeader>
               <form onSubmit={handleSignUp}>
                 <CardContent className="space-y-4">

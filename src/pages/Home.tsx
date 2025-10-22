@@ -57,10 +57,10 @@ const Home = () => {
               Your 360-second AI memory companion
             </h2>
             <p className="text-lg text-text-muted leading-relaxed mb-4">
-              HeyLuca is designed for professionals at meetings, conferences, and networking events.
+              Designed for professionals at meetings, conferences, and networking events.
             </p>
             <p className="text-lg text-text-muted leading-relaxed">
-              You can't capture everything in the moment — but with HeyLuca, you can record your insights right after each connection.
+              You can't capture everything in the moment — but you can record your insights right after each connection.
             </p>
           </div>
         </section>
@@ -84,7 +84,7 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-semibold text-text mb-3">Record your conversation</h3>
               <p className="text-text-muted">
-                Record your side of the conversation and let HeyLuca organize it all.
+                Record your side of the conversation and let AI organize it all.
               </p>
             </div>
 
@@ -112,7 +112,7 @@ const Home = () => {
                   Smart conference recap for your team
                 </h2>
                 <p className="text-lg text-text-muted leading-relaxed mb-4">
-                  HeyLuca builds a comprehensive conference recap complete with action items, reminders, and next steps.
+                  Get a comprehensive conference recap complete with action items, reminders, and next steps.
                 </p>
                 <p className="text-lg text-text-muted leading-relaxed">
                   Eliminate the long hours of post-event note-taking and follow-up.
