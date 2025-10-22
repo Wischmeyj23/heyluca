@@ -39,7 +39,7 @@ const Home = () => {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* What is FO-MO.ai */}
+        {/* What is HeyLuca */}
         <section className="mb-24">
           <div className="bg-surface border border-border rounded-2xl p-8 sm:p-12 shadow-lg">
             <h2 className="text-3xl sm:text-4xl font-bold text-text mb-6">

@@ -1,4 +1,4 @@
-# FO-MO.ai - Voice-First Follow-Up Memory Assistant
+# HeyLuca - Voice-First Follow-Up Memory Assistant
 
 A beautiful, mobile-first web app for capturing and managing follow-up notes with AI-powered summaries and automatic next steps.
 

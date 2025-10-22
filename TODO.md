@@ -1,4 +1,4 @@
-# FO-MO.ai - Production Implementation TODO
+# HeyLuca - Production Implementation TODO
 
 This document maps simulated endpoints to real services for production deployment.
 
@@ -230,7 +230,7 @@ const sendReminderEmail = async (to: string, subject: string, body: string, dueD
         to: [{ email: to }],
         subject: subject,
       }],
-      from: { email: 'reminders@fomo.ai' },
+      from: { email: 'reminders@heyluca.com' },
       content: [{
         type: 'text/html',
         value: body,

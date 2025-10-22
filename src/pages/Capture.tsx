@@ -108,7 +108,7 @@ export default function Capture() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-3xl font-bold mb-2 bg-gradient-brand bg-clip-text text-transparent">
-            FO-MO.ai
+            HeyLuca
           </h1>
           <p className="text-text-muted">Record a 60-second follow-up memory</p>
         </div>
