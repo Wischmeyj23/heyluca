@@ -1,18 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Mic, Users, FileText, Zap } from "lucide-react";
-import logo from "@/assets/heyluca-logo.png";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-bg">
-      {/* Logo in top left */}
-      <div className="absolute top-6 left-6 z-10">
-        <img src={logo} alt="HeyLuca" className="h-10 sm:h-12" />
-      </div>
-
       {/* Hero Section */}
       <header className="relative overflow-hidden">
         {/* Gradient background effect */}
