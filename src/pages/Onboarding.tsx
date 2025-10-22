@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Mic, Sparkles, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/heyluca-logo.png";
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -44,7 +45,12 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-b from-bg to-surface">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-b from-bg to-surface relative">
+      {/* Logo in top left */}
+      <div className="absolute top-6 left-6">
+        <img src={logo} alt="HeyLuca" className="h-10 sm:h-12" />
+      </div>
+
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-12">
