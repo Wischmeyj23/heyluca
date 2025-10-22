@@ -68,44 +68,263 @@ export type Database = {
           },
         ]
       }
+      companies: {
+        Row: {
+          city: string | null
+          country: string | null
+          created_at: string
+          domain: string | null
+          id: string
+          industry: string | null
+          linkedin_url: string | null
+          name: string
+          notes: string | null
+          owner_user_id: string
+          phone: string | null
+          state: string | null
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          domain?: string | null
+          id?: string
+          industry?: string | null
+          linkedin_url?: string | null
+          name: string
+          notes?: string | null
+          owner_user_id: string
+          phone?: string | null
+          state?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          domain?: string | null
+          id?: string
+          industry?: string | null
+          linkedin_url?: string | null
+          name?: string
+          notes?: string | null
+          owner_user_id?: string
+          phone?: string | null
+          state?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
+      company_domains: {
+        Row: {
+          company_id: string
+          created_at: string
+          domain: string
+          id: string
+          owner_user_id: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          domain: string
+          id?: string
+          owner_user_id: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          domain?: string
+          id?: string
+          owner_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_domains_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conference_recaps: {
+        Row: {
+          conference_id: string
+          generated_at: string | null
+          id: string
+          owner_user_id: string
+          storage_path: string
+        }
+        Insert: {
+          conference_id: string
+          generated_at?: string | null
+          id?: string
+          owner_user_id: string
+          storage_path: string
+        }
+        Update: {
+          conference_id?: string
+          generated_at?: string | null
+          id?: string
+          owner_user_id?: string
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conference_recaps_conference_id_fkey"
+            columns: ["conference_id"]
+            isOneToOne: false
+            referencedRelation: "conferences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conference_sessions: {
+        Row: {
+          conference_id: string
+          contact_id: string | null
+          created_at: string
+          id: string
+          meeting_id: string | null
+          owner_user_id: string
+          started_at: string | null
+          title: string | null
+        }
+        Insert: {
+          conference_id: string
+          contact_id?: string | null
+          created_at?: string
+          id?: string
+          meeting_id?: string | null
+          owner_user_id: string
+          started_at?: string | null
+          title?: string | null
+        }
+        Update: {
+          conference_id?: string
+          contact_id?: string | null
+          created_at?: string
+          id?: string
+          meeting_id?: string | null
+          owner_user_id?: string
+          started_at?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conference_sessions_conference_id_fkey"
+            columns: ["conference_id"]
+            isOneToOne: false
+            referencedRelation: "conferences"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conference_sessions_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conference_sessions_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conferences: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          id: string
+          location: string | null
+          name: string
+          notes: string | null
+          owner_user_id: string
+          start_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          location?: string | null
+          name: string
+          notes?: string | null
+          owner_user_id: string
+          start_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          location?: string | null
+          name?: string
+          notes?: string | null
+          owner_user_id?: string
+          start_date?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contacts: {
         Row: {
           avatar_url: string | null
           company: string | null
+          company_id: string | null
           created_at: string
           email: string | null
           full_name: string
           id: string
           linkedin_url: string | null
           phone: string | null
+          title: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
           avatar_url?: string | null
           company?: string | null
+          company_id?: string | null
           created_at?: string
           email?: string | null
           full_name: string
           id?: string
           linkedin_url?: string | null
           phone?: string | null
+          title?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
           avatar_url?: string | null
           company?: string | null
+          company_id?: string | null
           created_at?: string
           email?: string | null
           full_name?: string
           id?: string
           linkedin_url?: string | null
           phone?: string | null
+          title?: string | null
           updated_at?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "contacts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "contacts_user_id_fkey"
             columns: ["user_id"]
@@ -114,6 +333,116 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      contacts_meetings: {
+        Row: {
+          contact_id: string
+          meeting_id: string
+          role: string | null
+        }
+        Insert: {
+          contact_id: string
+          meeting_id: string
+          role?: string | null
+        }
+        Update: {
+          contact_id?: string
+          meeting_id?: string
+          role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contacts_meetings_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contacts_meetings_meeting_id_fkey"
+            columns: ["meeting_id"]
+            isOneToOne: false
+            referencedRelation: "meetings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          contact_id: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          owner_user_id: string
+          source: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          contact_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          owner_user_id: string
+          source?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contact_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          owner_user_id?: string
+          source?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meetings: {
+        Row: {
+          created_at: string
+          event: string | null
+          happened_at: string | null
+          id: string
+          location: string | null
+          notes_raw: string | null
+          owner_user_id: string
+          summary: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          event?: string | null
+          happened_at?: string | null
+          id?: string
+          location?: string | null
+          notes_raw?: string | null
+          owner_user_id: string
+          summary?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          event?: string | null
+          happened_at?: string | null
+          id?: string
+          location?: string | null
+          notes_raw?: string | null
+          owner_user_id?: string
+          summary?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       notes: {
         Row: {

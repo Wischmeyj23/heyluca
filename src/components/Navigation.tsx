@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Mic, FileText, Users, Settings } from "lucide-react";
+import { Mic, FileText, Users, Settings, Building2, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
@@ -8,7 +8,9 @@ export function Navigation() {
   const links = [
     { href: "/capture", icon: Mic, label: "Capture" },
     { href: "/notes", icon: FileText, label: "Notes" },
-    { href: "/contacts", icon: Users, label: "Contacts" },
+    { href: "/crm/companies", icon: Building2, label: "Companies" },
+    { href: "/crm/contacts", icon: Users, label: "Contacts" },
+    { href: "/conferences", icon: Calendar, label: "Events" },
     { href: "/settings", icon: Settings, label: "Settings" },
   ];
 

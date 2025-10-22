@@ -17,6 +17,12 @@ import Settings from "./pages/Settings";
 import Onboarding from "./pages/Onboarding";
 import ScanCard from "./pages/ScanCard";
 import NotFound from "./pages/NotFound";
+import Companies from "./pages/crm/Companies";
+import CompanyDetail from "./pages/crm/CompanyDetail";
+import CRMContacts from "./pages/crm/CRMContacts";
+import ContactDetailCRM from "./pages/crm/ContactDetailCRM";
+import ConferenceList from "./pages/conferences/ConferenceList";
+import ConferenceDetail from "./pages/conferences/ConferenceDetail";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +45,17 @@ const App = () => (
               <Route path="/contacts/:id" element={<ProtectedRoute><ContactDetail /></ProtectedRoute>} />
               <Route path="/settings" element={<ProtectedRoute><Settings /><Navigation /></ProtectedRoute>} />
               <Route path="/scan-card" element={<ProtectedRoute><ScanCard /></ProtectedRoute>} />
+              
+              {/* CRM Routes */}
+              <Route path="/crm/companies" element={<ProtectedRoute><Companies /><Navigation /></ProtectedRoute>} />
+              <Route path="/crm/companies/:id" element={<ProtectedRoute><CompanyDetail /><Navigation /></ProtectedRoute>} />
+              <Route path="/crm/contacts" element={<ProtectedRoute><CRMContacts /><Navigation /></ProtectedRoute>} />
+              <Route path="/crm/contacts/:id" element={<ProtectedRoute><ContactDetailCRM /><Navigation /></ProtectedRoute>} />
+              
+              {/* Conference Routes */}
+              <Route path="/conferences" element={<ProtectedRoute><ConferenceList /><Navigation /></ProtectedRoute>} />
+              <Route path="/conferences/:id" element={<ProtectedRoute><ConferenceDetail /><Navigation /></ProtectedRoute>} />
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
