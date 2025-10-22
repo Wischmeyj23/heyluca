@@ -5,7 +5,7 @@ import { ArrowLeft, Upload, Loader2, Check, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { mockApi } from "@/lib/mock-api";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { BusinessCard } from "@/types";
 import { contactSchema } from "@/lib/validation";
@@ -19,7 +19,17 @@ export default function ScanCard() {
   const [linkedinGuess, setLinkedinGuess] = useState<string>();
 
   const createContactMutation = useMutation({
-    mutationFn: mockApi.contacts.create,
+    mutationFn: async (contactData: any) => {
+      const userId = (await supabase.auth.getUser()).data.user?.id;
+      const { data, error } = await supabase
+        .from('contacts')
+        .insert({ ...contactData, user_id: userId })
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
     onSuccess: (contact) => {
       queryClient.invalidateQueries({ queryKey: ["contacts"] });
       toast.success("Contact created!");
@@ -36,23 +46,77 @@ export default function ScanCard() {
       if (!file) return;
 
       try {
-        // Upload image
-        const { image_url } = await mockApi.upload.card(file);
-        setImageUrl(image_url);
-
-        // Create card record
-        const card = await mockApi.cards.create({ image_url });
-
-        // Process OCR
         setIsProcessing(true);
-        const processed = await mockApi.process.card(card.id);
-        setExtracted(processed.extracted);
-        setLinkedinGuess(processed.linkedin_guess);
-        setIsProcessing(false);
+        
+        // Upload image to storage
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `${fileName}`;
 
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('business_cards')
+          .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('business_cards')
+          .getPublicUrl(filePath);
+
+        setImageUrl(publicUrl);
+        
+        // Create card record in database
+        const { data: card, error: createError } = await supabase
+          .from('business_cards')
+          .insert({
+            image_url: publicUrl,
+            user_id: (await supabase.auth.getUser()).data.user?.id
+          })
+          .select()
+          .single();
+
+        if (createError) throw createError;
+        
+        // Mock OCR extraction (in production, this would be real OCR)
+        const mockNames = ["Jennifer Lee", "Marcus Johnson", "Priya Patel", "Tom Anderson"];
+        const mockCompanies = ["Stellar Inc", "CloudNext", "DataFlow Systems", "Apex Solutions"];
+        
+        const name = mockNames[Math.floor(Math.random() * mockNames.length)];
+        const company = mockCompanies[Math.floor(Math.random() * mockCompanies.length)];
+        const firstName = name.split(" ")[0].toLowerCase();
+        const lastName = name.split(" ")[1].toLowerCase();
+        
+        const extractedData = {
+          name,
+          company,
+          email: `${firstName}.${lastName}@${company.toLowerCase().replace(" ", "")}.com`,
+          phone: `+1-555-${Math.floor(1000 + Math.random() * 9000)}`,
+        };
+
+        const ocrText = `${name}\n${company}\n${extractedData.email}\n${extractedData.phone}`;
+        const linkedInGuess = `https://linkedin.com/in/${firstName}${lastName}`;
+
+        // Process card with validation via edge function
+        const { data: processedCard, error: processError } = await supabase.functions.invoke('process-card', {
+          body: {
+            card_id: card.id,
+            extracted: extractedData,
+            ocr_text: ocrText,
+            linkedin_guess: linkedInGuess,
+          }
+        });
+
+        if (processError) throw processError;
+
+        setExtracted(extractedData);
+        setLinkedinGuess(linkedInGuess);
+        
         toast.success("Business card scanned!");
       } catch (error) {
+        console.error("Error scanning card:", error);
         toast.error("Failed to scan card");
+      } finally {
         setIsProcessing(false);
       }
     };
