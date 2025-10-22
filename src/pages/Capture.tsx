@@ -141,9 +141,11 @@ export default function Capture() {
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold mb-2 bg-gradient-brand bg-clip-text text-transparent">
-            HeyLuca
-          </h1>
+          <img 
+            src={new URL('@/assets/heyluca-logo.png', import.meta.url).href} 
+            alt="HeyLuca" 
+            className="h-10 mx-auto mb-4"
+          />
           <p className="text-text-muted">Record a 60-second follow-up memory</p>
         </div>
 

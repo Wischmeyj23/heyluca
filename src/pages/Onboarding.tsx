@@ -48,9 +48,11 @@ export default function Onboarding() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold mb-2 bg-gradient-brand bg-clip-text text-transparent">
-            HeyLuca
-          </h1>
+          <img 
+            src={new URL('@/assets/heyluca-logo.png', import.meta.url).href} 
+            alt="HeyLuca" 
+            className="h-10 mx-auto mb-4"
+          />
           <p className="text-text-muted">Your follow-up memory assistant</p>
         </div>
 

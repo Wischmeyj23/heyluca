@@ -15,9 +15,11 @@ const Home = () => {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
           {/* Logo/Brand */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-brand bg-clip-text text-transparent mb-6">
-              HeyLuca
-            </h1>
+            <img 
+              src={new URL('@/assets/heyluca-logo.png', import.meta.url).href} 
+              alt="HeyLuca" 
+              className="h-16 sm:h-20 lg:h-24 mx-auto mb-6"
+            />
             <p className="text-xl sm:text-2xl text-text-muted max-w-3xl mx-auto leading-relaxed">
               "Never forget a conversation"
             </p>
@@ -156,9 +158,16 @@ const Home = () => {
       {/* Footer */}
       <footer className="border-t border-border mt-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p className="text-center text-text-muted">
-            © 2025 HeyLuca. Never forget what matters.
-          </p>
+          <div className="flex flex-col items-center gap-2">
+            <img 
+              src={new URL('@/assets/heyluca-logo.png', import.meta.url).href} 
+              alt="HeyLuca" 
+              className="h-8"
+            />
+            <p className="text-center text-text-muted">
+              © 2025 Never forget what matters.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

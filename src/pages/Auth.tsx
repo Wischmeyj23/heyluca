@@ -73,9 +73,11 @@ export default function Auth() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-brand bg-clip-text text-transparent">
-            HeyLuca
-          </h1>
+          <img 
+            src={new URL('@/assets/heyluca-logo.png', import.meta.url).href} 
+            alt="HeyLuca" 
+            className="h-12 mx-auto mb-4"
+          />
           <p className="text-text-muted">Your AI memory companion</p>
         </div>
 
