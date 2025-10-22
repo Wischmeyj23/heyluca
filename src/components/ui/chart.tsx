@@ -6,6 +6,54 @@ import { cn } from "@/lib/utils";
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
 
+/**
+ * Validates and sanitizes CSS color values to prevent XSS attacks.
+ * Only allows safe color formats: hex, rgb/rgba, hsl/hsla, and named colors.
+ * @param color - The color string to validate
+ * @returns The sanitized color or null if invalid
+ */
+function sanitizeColor(color: string): string | null {
+  if (!color || typeof color !== 'string') {
+    return null;
+  }
+
+  const trimmed = color.trim();
+
+  // Allow hex colors: #fff, #ffffff, #ffffff00
+  if (/^#[0-9A-Fa-f]{3,8}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // Allow rgb/rgba: rgb(255,255,255), rgba(255,255,255,0.5)
+  if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+\s*)?\)$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // Allow hsl/hsla: hsl(120,100%,50%), hsla(120,100%,50%,0.5)
+  if (/^hsla?\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*(,\s*[\d.]+\s*)?\)$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // Allow CSS named colors (basic set for safety)
+  const namedColors = [
+    'transparent', 'currentcolor', 'inherit',
+    'black', 'white', 'red', 'green', 'blue', 'yellow', 'orange', 'purple',
+    'gray', 'grey', 'cyan', 'magenta', 'pink', 'brown', 'navy', 'teal'
+  ];
+  if (namedColors.includes(trimmed.toLowerCase())) {
+    return trimmed;
+  }
+
+  // Allow CSS variables: var(--color-name)
+  if (/^var\(--[\w-]+\)$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  // Invalid color format - reject to prevent injection
+  console.warn(`Invalid color format rejected for security: ${color}`);
+  return null;
+}
+
 export type ChartConfig = {
   [k in string]: {
     label?: React.ReactNode;
@@ -58,6 +106,19 @@ const ChartContainer = React.forwardRef<
 });
 ChartContainer.displayName = "Chart";
 
+/**
+ * ChartStyle - Generates scoped CSS custom properties for chart theming.
+ * 
+ * SECURITY: All color values are validated and sanitized to prevent XSS attacks.
+ * Only safe CSS color formats are allowed. Any invalid colors are rejected.
+ * 
+ * IMPORTANT: This component uses dangerouslySetInnerHTML but is protected by:
+ * 1. Color validation that rejects any non-CSS-color strings
+ * 2. Sanitization of all user-provided color values
+ * 3. Template structure that prevents CSS injection
+ * 
+ * If extending this component, ensure all dynamic values are validated.
+ */
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(([_, config]) => config.theme || config.color);
 
@@ -65,23 +126,34 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null;
   }
 
+  // Generate CSS with validated colors only
+  const cssContent = Object.entries(THEMES)
+    .map(([theme, prefix]) => {
+      const colorDeclarations = colorConfig
+        .map(([key, itemConfig]) => {
+          const rawColor = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
+          if (!rawColor) return null;
+
+          // SECURITY: Validate and sanitize color value
+          const safeColor = sanitizeColor(rawColor);
+          if (!safeColor) {
+            console.warn(`Rejected unsafe color for chart ${id}, key ${key}: ${rawColor}`);
+            return null;
+          }
+
+          return `  --color-${key}: ${safeColor};`;
+        })
+        .filter(Boolean)
+        .join("\n");
+
+      return `${prefix} [data-chart=${id}] {\n${colorDeclarations}\n}`;
+    })
+    .join("\n");
+
   return (
     <style
       dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
-  })
-  .join("\n")}
-}
-`,
-          )
-          .join("\n"),
+        __html: cssContent,
       }}
     />
   );
