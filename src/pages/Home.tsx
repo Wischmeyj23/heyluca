@@ -24,15 +24,24 @@ const Home = () => {
           </div>
 
           {/* Main CTA */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 space-y-4">
             <Button 
               size="lg" 
-              onClick={() => navigate("/onboarding")}
+              onClick={() => navigate("/auth")}
               className="text-lg px-8 py-6 h-auto shadow-brand hover:shadow-lg transition-all"
             >
               Get Started
               <ArrowRight className="ml-2" />
             </Button>
+            <p className="text-sm text-text-muted">
+              Already have an account?{" "}
+              <button 
+                onClick={() => navigate("/auth")}
+                className="text-brand hover:underline"
+              >
+                Sign in
+              </button>
+            </p>
           </div>
         </div>
       </header>
@@ -134,7 +143,7 @@ const Home = () => {
             </p>
             <Button 
               size="lg" 
-              onClick={() => navigate("/onboarding")}
+              onClick={() => navigate("/auth")}
               className="text-lg px-8 py-6 h-auto shadow-brand"
             >
               Get Started Free

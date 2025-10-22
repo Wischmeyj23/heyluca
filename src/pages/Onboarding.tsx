@@ -35,12 +35,12 @@ export default function Onboarding() {
     if (step < slides.length - 1) {
       setStep(step + 1);
     } else {
-      navigate("/capture");
+      navigate("/auth");
     }
   };
 
   const handleSkip = () => {
-    navigate("/capture");
+    navigate("/auth");
   };
 
   return (
