@@ -87,22 +87,19 @@ export default function Capture() {
 
     setIsProcessing(true);
     try {
-      // Create note in database
-      const { data: note, error } = await supabase
-        .from("notes")
-        .insert({
-          user_id: user.id,
+      // Create note via secure edge function with validation
+      const { data, error } = await supabase.functions.invoke('create-note', {
+        body: {
           contact_id: selectedContactId,
           audio_url: audioUrl,
           photo_urls: photos,
-          status: "processing",
-          transcript: "Processing...",
-          summary: ["Processing audio..."],
-        })
-        .select()
-        .single();
+        }
+      });
 
       if (error) throw error;
+      if (!data?.note) throw new Error('Failed to create note');
+      
+      const note = data.note;
 
       // Simulate AI processing (in production, this would call an edge function)
       setTimeout(async () => {
