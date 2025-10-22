@@ -16,7 +16,7 @@ const Home = () => {
           {/* Logo/Brand */}
           <div className="text-center mb-12">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-brand bg-clip-text text-transparent mb-6">
-              FO-MO.ai
+              HeyLuca
             </h1>
             <p className="text-xl sm:text-2xl text-text-muted max-w-3xl mx-auto leading-relaxed">
               "Never forget a conversation, a face, or a business card again."
@@ -46,10 +46,10 @@ const Home = () => {
               Your 360-second AI memory companion
             </h2>
             <p className="text-lg text-text-muted leading-relaxed mb-4">
-              FO-MO.ai is designed for professionals at meetings, conferences, and networking events.
+              HeyLuca is designed for professionals at meetings, conferences, and networking events.
             </p>
             <p className="text-lg text-text-muted leading-relaxed">
-              You can't capture everything in the moment — but with FO-MO.ai, you can record your insights right after each connection.
+              You can't capture everything in the moment — but with HeyLuca, you can record your insights right after each connection.
             </p>
           </div>
         </section>
@@ -73,7 +73,7 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-semibold text-text mb-3">Record your conversation</h3>
               <p className="text-text-muted">
-                Record your side of the conversation and let FO-MO.ai organize it all.
+                Record your side of the conversation and let HeyLuca organize it all.
               </p>
             </div>
 
@@ -101,7 +101,7 @@ const Home = () => {
                   Smart conference recap for your team
                 </h2>
                 <p className="text-lg text-text-muted leading-relaxed mb-4">
-                  FO-MO.ai builds a comprehensive conference recap complete with action items, reminders, and next steps.
+                  HeyLuca builds a comprehensive conference recap complete with action items, reminders, and next steps.
                 </p>
                 <p className="text-lg text-text-muted leading-relaxed">
                   Eliminate the long hours of post-event note-taking and follow-up.
@@ -148,7 +148,7 @@ const Home = () => {
       <footer className="border-t border-border mt-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-text-muted">
-            © 2025 FO-MO.ai. Never forget what matters.
+            © 2025 HeyLuca. Never forget what matters.
           </p>
         </div>
       </footer>
