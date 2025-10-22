@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { mockApi } from "@/lib/mock-api";
 import { toast } from "sonner";
 import { BusinessCard } from "@/types";
+import { contactSchema } from "@/lib/validation";
 
 export default function ScanCard() {
   const navigate = useNavigate();
@@ -61,13 +62,24 @@ export default function ScanCard() {
   const handleCreateContact = () => {
     if (!extracted) return;
     
-    createContactMutation.mutate({
+    // Validate contact data before submission
+    const contactData = {
       full_name: extracted.name || "",
-      company: extracted.company,
-      email: extracted.email,
-      phone: extracted.phone,
-      linkedin_url: linkedinGuess,
-    });
+      company: extracted.company || "",
+      email: extracted.email || "",
+      phone: extracted.phone || "",
+      linkedin_url: linkedinGuess || "",
+    };
+
+    const validation = contactSchema.safeParse(contactData);
+    
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast.error(`Validation error: ${firstError.message}`);
+      return;
+    }
+    
+    createContactMutation.mutate(validation.data);
   };
 
   return (
