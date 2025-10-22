@@ -19,7 +19,7 @@ const Home = () => {
               HeyLuca
             </h1>
             <p className="text-xl sm:text-2xl text-text-muted max-w-3xl mx-auto leading-relaxed">
-              "Never forget a conversation, a face, or a business card again."
+              "Never forget a conversation"
             </p>
           </div>
 
