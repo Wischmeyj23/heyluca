@@ -20,19 +20,16 @@ export default function ScanCard() {
 
   const createContactMutation = useMutation({
     mutationFn: async (contactData: any) => {
-      const userId = (await supabase.auth.getUser()).data.user?.id;
-      const { data, error } = await supabase
-        .from('contacts')
-        .insert({ ...contactData, user_id: userId })
-        .select()
-        .single();
+      const { data, error } = await supabase.functions.invoke('contact-upsert', {
+        body: contactData
+      });
       
       if (error) throw error;
-      return data;
+      return data.contact;
     },
     onSuccess: (contact) => {
       queryClient.invalidateQueries({ queryKey: ["contacts"] });
-      toast.success("Contact created!");
+      toast.success("Contact created with auto-company linking!");
       navigate(`/contacts/${contact.id}`);
     },
   });
