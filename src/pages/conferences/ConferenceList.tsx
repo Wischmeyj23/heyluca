@@ -15,13 +15,16 @@ export default function ConferenceList() {
   const { data: conferences, isLoading } = useQuery({
     queryKey: ["conferences", searchQuery],
     queryFn: async () => {
+      // Sanitize search query: max 100 chars, trim whitespace, minimum 2 chars
+      const sanitizedQuery = searchQuery.trim().slice(0, 100);
+      
       let query = supabase
         .from("conferences")
         .select("*, conference_sessions(count)")
         .order("start_date", { ascending: false, nullsFirst: false });
 
-      if (searchQuery) {
-        query = query.ilike("name", `%${searchQuery}%`);
+      if (sanitizedQuery.length >= 2) {
+        query = query.ilike("name", `%${sanitizedQuery}%`);
       }
 
       const { data, error } = await query;

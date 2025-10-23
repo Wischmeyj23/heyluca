@@ -22,13 +22,16 @@ export default function Companies() {
   const { data: companies, isLoading } = useQuery({
     queryKey: ["companies", searchQuery],
     queryFn: async () => {
+      // Sanitize search query: max 100 chars, trim whitespace, minimum 2 chars
+      const sanitizedQuery = searchQuery.trim().slice(0, 100);
+      
       let query = supabase
         .from("companies")
         .select("*, contacts(count)")
         .order("updated_at", { ascending: false });
 
-      if (searchQuery) {
-        query = query.or(`name.ilike.%${searchQuery}%,domain.ilike.%${searchQuery}%`);
+      if (sanitizedQuery.length >= 2) {
+        query = query.or(`name.ilike.%${sanitizedQuery}%,domain.ilike.%${sanitizedQuery}%`);
       }
 
       const { data, error } = await query;

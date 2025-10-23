@@ -24,13 +24,16 @@ export default function CRMContacts() {
   const { data: contacts, isLoading } = useQuery({
     queryKey: ["crm-contacts", searchQuery],
     queryFn: async () => {
+      // Sanitize search query: max 100 chars, trim whitespace, minimum 2 chars
+      const sanitizedQuery = searchQuery.trim().slice(0, 100);
+      
       let query = supabase
         .from("contacts")
         .select("*, company:companies(*)")
         .order("created_at", { ascending: false });
 
-      if (searchQuery) {
-        query = query.or(`full_name.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`);
+      if (sanitizedQuery.length >= 2) {
+        query = query.or(`full_name.ilike.%${sanitizedQuery}%,email.ilike.%${sanitizedQuery}%`);
       }
 
       const { data, error } = await query;
