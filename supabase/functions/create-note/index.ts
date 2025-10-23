@@ -13,6 +13,7 @@ const MAX_PHOTOS = 10;
 
 interface CreateNoteRequest {
   contact_id: string | null;
+  conference_id?: string | null;
   audio_url: string;
   photo_urls: string[];
 }
@@ -117,6 +118,32 @@ serve(async (req) => {
       }
     }
 
+    // Validate conference_id if provided
+    if (body.conference_id) {
+      if (typeof body.conference_id !== 'string') {
+        return new Response(
+          JSON.stringify({ error: 'conference_id must be a string UUID' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      const { data: conf, error: confError } = await supabase
+        .from('conferences')
+        .select('id')
+        .eq('id', body.conference_id)
+        .eq('owner_user_id', user.id)
+        .single();
+      if (confError || !conf) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid conference_id or access denied' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    }
+
+    // Prepare tags (annotate with conference if provided)
+    const tags: string[] = [];
+    if (body.conference_id) tags.push(`conference:${body.conference_id}`);
+
     // Create note in database
     const { data: note, error: insertError } = await supabase
       .from('notes')
@@ -125,6 +152,7 @@ serve(async (req) => {
         contact_id: body.contact_id,
         audio_url: body.audio_url,
         photo_urls: body.photo_urls,
+        tags,
         status: 'processing',
         transcript: 'Processing...',
         summary: ['Processing audio...'],
