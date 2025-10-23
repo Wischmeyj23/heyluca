@@ -2,3 +2,21 @@ project_id = "jgltriudckwmnkujzrkh"
 
 [functions.create-note]
 verify_jwt = true
+
+[functions.process-note]
+verify_jwt = true
+
+[functions.process-card]
+verify_jwt = true
+
+[functions.contact-upsert]
+verify_jwt = true
+
+[functions.company-upsert]
+verify_jwt = true
+
+[functions.conference-add-session]
+verify_jwt = true
+
+[functions.conference-recap]
+verify_jwt = true
