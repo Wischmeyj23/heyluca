@@ -12,6 +12,15 @@ export default function CompanyDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // Guard against "new" route
+  if (id === 'new') {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-text-muted">Create company form not yet implemented</p>
+      </div>
+    );
+  }
+
   const { data: company } = useQuery({
     queryKey: ["company", id],
     queryFn: async () => {

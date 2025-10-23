@@ -13,6 +13,15 @@ export default function ContactDetailCRM() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // Guard against "new" route
+  if (id === 'new') {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-text-muted">Create contact form not yet implemented</p>
+      </div>
+    );
+  }
+
   const { data: contact } = useQuery({
     queryKey: ["contact", id],
     queryFn: async () => {
@@ -32,10 +41,14 @@ export default function ContactDetailCRM() {
       const { data, error } = await supabase
         .from("contacts_meetings")
         .select("meeting:meetings(*)")
-        .eq("contact_id", id)
-        .order("created_at", { ascending: false });
+        .eq("contact_id", id);
       if (error) throw error;
-      return data.map(cm => cm.meeting) as Meeting[];
+      // Sort by meeting happened_at on the client since contacts_meetings has no timestamp
+      const sortedData = data
+        .map(cm => cm.meeting)
+        .filter(Boolean)
+        .sort((a: any, b: any) => new Date(b.happened_at).getTime() - new Date(a.happened_at).getTime());
+      return sortedData as Meeting[];
     },
   });
 

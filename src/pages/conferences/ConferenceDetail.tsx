@@ -13,6 +13,15 @@ export default function ConferenceDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // Guard against "new" route
+  if (id === 'new') {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-text-muted">Create conference form not yet implemented</p>
+      </div>
+    );
+  }
+
   const { data: conference } = useQuery({
     queryKey: ["conference", id],
     queryFn: async () => {
